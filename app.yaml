@@ -1,5 +1,7 @@
 runtime: python38
 
+instance_class: F4_1G
+
 handlers:
 - url: /static
   static_dir: static
