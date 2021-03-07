@@ -1,15 +1,13 @@
 from flask import Flask, request, abort, redirect
 import ML.interface as ML
-import os
-
-#from flask_cors import CORS
+from flask_cors import CORS
 
 ########################################################################################
 # App Setup
 ########################################################################################
 app = Flask("Opticus")
 app.secret_key = "Not really very secret"
-#CORS(app)
+CORS(app)
 
 
 ########################################################################################
@@ -24,7 +22,7 @@ def overview():
 #Redirect some static file paths
 @app.route("/opticus-ui/static/<path:path>", methods=["GET"])
 def getUIStatic(path):
-    return app.send_static_file(os.path.join("static", path))
+    return app.send_static_file(path)
 
 #If reloaded while at /measure
 @app.route("/measure", methods=["GET"])
