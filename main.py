@@ -1,6 +1,5 @@
-from flask import Flask, request, session, render_template, redirect
-from PIL import Image
-import numpy
+from flask import Flask, request, session, render_template, redirect, abort
+import ML.interface as ML
 
 ########################################################################################
 # App Setup
@@ -27,19 +26,17 @@ def about():
 @app.route("/measure", methods=["POST"])
 def measurePost():
     if "file" in request.files:
-        file = request.files["file"]
+        f = request.files["file"]
 
         #Some file checking
-        if file and (not file.filename == ""):
-            if ("." in file.filename) and (file.filename.rsplit(".", 1)[1].lower() in {"png", "jpg", "jpeg", "gif"}):
-                arr = numpy.array(Image.open(file).convert('RGB'), dtype=numpy.float32)
-                #Send to ML for processing
-                session["results"] = int(arr[0][0][0])
+        if f and (not f.filename == ""):
+            if ("." in f.filename) and (f.filename.rsplit(".", 1)[1].lower() in {"png", "jpg", "jpeg", "gif"}):
+                measurements = ML.getFaceMeasurements(f)
+                session["results"] = measurements
                 return redirect("/")
-                #return {"success": True, "results": }
+                #return {"success": True, "measurements": measurements}
 
-    return redirect("/")
-    #return {"success": False}
+    abort(400)
 
 
 ########################################################################################
