@@ -54,10 +54,9 @@ def getFaceMeasurements(f):
     coords = get_preds(output)
     coords = coords.squeeze()
     coords = coords.numpy()
-    coordsList = coords.tolist()
 
-    faceMeasurementsCoords = [( (abs(coordsList[16][0] - coords[ 0][0]))**2 + (abs(coordsList[16][1] - coords[ 0][1]))**2 )**(1/2),
-                              ( (abs(coordsList[42][0] - coords[39][0]))**2 + (abs(coordsList[42][1] - coords[39][1]))**2 )**(1/2)]
+    faceMeasurementsCoords = [int( (abs(coords[16][0] - coords[ 0][0]))**2 + (abs(coords[16][1] - coords[ 0][1]))**2 )**(1/2),
+                              int( (abs(coords[42][0] - coords[39][0]))**2 + (abs(coords[42][1] - coords[39][1]))**2 )**(1/2)]
 
     # ~ res = cv2.resize(img[2,:,:], dsize=(64, 64), interpolation=cv2.INTER_CUBIC )
     # ~ plt.imshow(res,cmap="cividis")
