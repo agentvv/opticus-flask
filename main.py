@@ -1,11 +1,14 @@
 from flask import Flask, request, session, render_template, redirect, abort
 import ML.interface as ML
 
+#from flask_cors import CORS
+
 ########################################################################################
 # App Setup
 ########################################################################################
 app = Flask("Opticus")
 app.secret_key = "Not really very secret"
+#CORS(app)
 
 
 ########################################################################################
@@ -16,6 +19,7 @@ app.secret_key = "Not really very secret"
 @app.route("/", methods=["GET"])
 def overview():
     return render_template("overview.html", results=session.get("results", None))
+    #return render_template("overview.html", None)
 
 #About page
 @app.route("/about", methods=["GET"])

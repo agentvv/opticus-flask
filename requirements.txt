@@ -4,5 +4,6 @@ numpy==1.20.1
 torch==1.8.0
 opencv-python==4.5.1.48
 scipy==1.6.1
+flask-cors==3.0.10
 hdf5storage
 yacs
