@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>Opticus</title>
+</head>
+<body>
+    <p>This is a test</p>
+    <a href="/about"> Go to about page </a>
+    <br/>
+    <br/>
+    <h1> Main Page! </h1>
+
+    {% if results is not none %}
+        <br/>
+        <h1> Previous Results: </h1>
+        <br/>
+        <div> {{ results }} </div>
+    {% endif %}
+
+    <br/>
+    <br/>
+    <h1>Upload Image</h1>
+    <form method="POST" action="/measure" enctype="multipart/form-data">
+      <input type="file" name="file">
+      <input type="submit" value="Upload">
+    </form>
+</body>
+</html>
