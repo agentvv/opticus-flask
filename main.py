@@ -4,7 +4,7 @@ from flask import *
 ########################################################################################
 # App Setup
 ########################################################################################
-app = Flask("Opticus", static_url_path="")
+app = Flask("Opticus")
 app.secret_key = "Not really very secret"
 
 
@@ -12,12 +12,12 @@ app.secret_key = "Not really very secret"
 # Flask Routing
 ########################################################################################
 @app.route("/")
-def index():
-    return redirect("/index.html")
+def root():
+    return app.send_static_file('index.html')
 
 
 ########################################################################################
 # Start Flask App
 ########################################################################################
 if __name__ == "__main__":
-    app.run(host="localhost", port=5000, debug=False)
+    app.run(host="localhost", port=5000, debug=True)
