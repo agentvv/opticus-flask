@@ -1,5 +1,6 @@
-from flask import Flask, request, session, render_template, redirect, abort
+from flask import Flask, request, abort, redirect
 import ML.interface as ML
+import os
 
 #from flask_cors import CORS
 
@@ -18,13 +19,17 @@ app.secret_key = "Not really very secret"
 #Overview page
 @app.route("/", methods=["GET"])
 def overview():
-    return render_template("overview.html", results=session.get("results", None))
-    #return render_template("overview.html", results=None)
+    return app.send_static_file("index.html")
 
-#About page
-@app.route("/about", methods=["GET"])
-def about():
-    return app.send_static_file("about.html")
+#Redirect some static file paths
+@app.route("/opticus-ui/static/<path:path>", methods=["GET"])
+def getUIStatic(path):
+    return app.send_static_file(os.path.join("static", path))
+
+#If reloaded while at /measure
+@app.route("/measure", methods=["GET"])
+def measureGet():
+    return redirect("/")
 
 #Image post API endpoint
 @app.route("/measure", methods=["POST"])
@@ -36,9 +41,7 @@ def measurePost():
         if f and (not f.filename == ""):
             if ("." in f.filename) and (f.filename.rsplit(".", 1)[1].lower() in {"png", "jpg", "jpeg", "gif"}):
                 measurements = ML.getFaceMeasurements(f)
-                session["results"] = measurements
-                return redirect("/")
-                #return {"success": True, "measurements": measurements}
+                return {"success": True, "measurements": measurements}
 
     abort(400)
 
